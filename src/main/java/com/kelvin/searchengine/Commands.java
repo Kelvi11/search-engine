@@ -1,6 +1,7 @@
 package com.kelvin.searchengine;
 
 import com.kelvin.searchengine.model.Document;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
@@ -11,6 +12,9 @@ import java.util.List;
 @ShellComponent
 public class Commands {
 
+    @Autowired
+    DocumentStorage documentStorage;
+
     @ShellMethod("Adds a document to the index.")
     public String index(int docId, @ShellOption(arity = Integer.MAX_VALUE) String tokens) {
 
@@ -20,7 +24,7 @@ public class Commands {
         }
 
         Document document = new Document(docId, tokens);
-        //store
+        documentStorage.store(document);
 
         return ResponseEntity.indexOk(docId);
     }
