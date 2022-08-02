@@ -1,5 +1,6 @@
-package com.kelvin.searchengine;
+package com.kelvin.searchengine.api;
 
+import com.kelvin.searchengine.repository.DocumentStorage;
 import com.kelvin.searchengine.model.Document;
 import com.kelvin.searchengine.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

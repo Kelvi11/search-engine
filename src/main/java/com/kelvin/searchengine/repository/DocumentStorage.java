@@ -1,4 +1,4 @@
-package com.kelvin.searchengine;
+package com.kelvin.searchengine.repository;
 
 import com.kelvin.searchengine.model.Document;
 import org.springframework.stereotype.Service;

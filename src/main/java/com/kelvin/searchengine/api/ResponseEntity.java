@@ -1,4 +1,4 @@
-package com.kelvin.searchengine;
+package com.kelvin.searchengine.api;
 
 public class ResponseEntity {
 
