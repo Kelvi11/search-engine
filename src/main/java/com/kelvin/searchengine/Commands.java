@@ -1,8 +1,12 @@
 package com.kelvin.searchengine;
 
+import com.kelvin.searchengine.model.Document;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+
+import java.util.Arrays;
+import java.util.List;
 
 @ShellComponent
 public class Commands {
@@ -10,13 +14,15 @@ public class Commands {
     @ShellMethod("Adds a document to the index.")
     public String index(int docId, @ShellOption(arity = Integer.MAX_VALUE) String tokens) {
 
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(docId);
-        stringBuilder.append(" ");
-        stringBuilder.append(tokens);
-        stringBuilder.append(" ");
+        if(tokens == null || tokens.isEmpty()){
+            String message = "At least one token should be provided!";
+            return ResponseEntity.indexError(message);
+        }
 
-        return stringBuilder.toString();
+        Document document = new Document(docId, tokens);
+        //store
+
+        return ResponseEntity.indexOk(docId);
     }
 
     @ShellMethod("Search for document ids based on tokens.")
