@@ -1,5 +1,8 @@
 package com.kelvin.searchengine.api;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class ResponseEntity {
 
     public static String indexOk(int docId) {
@@ -10,11 +13,16 @@ public class ResponseEntity {
         return "index error " + message;
     }
 
-    public static String queryResults() {
-        return "query results ";
+    public static String queryResults(List<Integer> documentsIds) {
+
+        String message = documentsIds.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(" "));
+
+        return "query results " + message;
     }
 
-    public static String queryError() {
-        return "query error ";
+    public static String queryError(String message) {
+        return "query error " + message;
     }
 }

@@ -1,12 +1,16 @@
 package com.kelvin.searchengine.api;
 
-import com.kelvin.searchengine.repository.DocumentStorage;
 import com.kelvin.searchengine.model.Document;
+import com.kelvin.searchengine.model.SearchToken;
+import com.kelvin.searchengine.repository.DocumentStorage;
 import com.kelvin.searchengine.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @ShellComponent
 public class Commands {
@@ -45,9 +49,26 @@ public class Commands {
     @ShellMethod("Search for document ids based on tokens.")
     public String query(@ShellOption(arity = Integer.MAX_VALUE) String expression) {
 
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(expression);
+        expression = expression.replace(" ", "");
 
-        return stringBuilder.toString();
+        List<Integer> documentsIds;
+        if (isSingleToken(expression)){
+            documentsIds = new ArrayList<>(documentStorage.getDocumentsIdsForSingleToken(expression));
+        }
+        else {
+            SearchToken searchToken = new SearchToken(expression);
+
+            documentsIds = new ArrayList<>(documentStorage.getDocumentsIds(searchToken));
+        }
+        if (documentsIds.isEmpty()){
+            String message = "No results found.";
+            return ResponseEntity.queryError(message);
+        }
+
+        return ResponseEntity.queryResults(documentsIds);
+    }
+
+    private static boolean isSingleToken(String expression) {
+        return !StringUtils.hasNonAlphanumericCharacter(expression);
     }
 }

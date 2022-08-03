@@ -9,11 +9,15 @@ public class StringUtils {
         List<String> tokens = Arrays.asList(tokensSentence.split(" "));
 
         for (String token : tokens){
-            if(token.matches("^.*[^a-zA-Z0-9 ].*$")){
-                return true;
-            }
+            if (hasNonAlphanumericCharacter(token)) return true;
         }
+        return false;
+    }
 
+    public static boolean hasNonAlphanumericCharacter(String token) {
+        if(token.matches("^.*[^a-zA-Z0-9 ].*$")){
+            return true;
+        }
         return false;
     }
 }
