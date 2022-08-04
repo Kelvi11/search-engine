@@ -29,6 +29,11 @@ public class Commands {
             return ResponseEntity.indexError(message);
         }
 
+        if(id < 1){
+            String message = "Doc id should be an positive integer!";
+            return ResponseEntity.indexError(message);
+        }
+
         if (tokens == null || tokens.isEmpty()) {
             String message = "At least one token should be provided!";
             return ResponseEntity.indexError(message);
