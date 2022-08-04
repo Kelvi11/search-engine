@@ -24,18 +24,17 @@ public class Commands {
         int id;
         try {
             id = Integer.parseInt(docId);
-        }
-        catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             String message = "Doc id should be an integer!";
             return ResponseEntity.indexError(message);
         }
 
-        if(tokens == null || tokens.isEmpty()){
+        if (tokens == null || tokens.isEmpty()) {
             String message = "At least one token should be provided!";
             return ResponseEntity.indexError(message);
         }
 
-        if (StringUtils.isAtLeastOneTokenNonAlphanumericCharacter(tokens)){
+        if (StringUtils.isAtLeastOneTokenNonAlphanumericCharacter(tokens)) {
             String message = "Tokens should contain only alphanumeric characters!";
             return ResponseEntity.indexError(message);
         }
@@ -49,26 +48,17 @@ public class Commands {
     @ShellMethod("Search for document ids based on tokens.")
     public String query(@ShellOption(arity = Integer.MAX_VALUE) String expression) {
 
-        expression = expression.replace(" ", "");
+        expression = StringUtils.trimSpaces(expression);
 
-        List<Integer> documentsIds;
-        if (isSingleToken(expression)){
-            documentsIds = new ArrayList<>(documentStorage.getDocumentsIdsForSingleToken(expression));
-        }
-        else {
-            SearchEntity searchEntity = new SearchEntity(expression);
+        SearchEntity searchEntity = new SearchEntity(expression);
 
-            documentsIds = new ArrayList<>(documentStorage.getDocumentsIds(searchEntity));
-        }
-        if (documentsIds.isEmpty()){
+        List<Integer> documentsIds = new ArrayList<>(documentStorage.getDocumentsIds(searchEntity));
+
+        if (documentsIds.isEmpty()) {
             String message = "No results found.";
             return ResponseEntity.queryError(message);
         }
 
         return ResponseEntity.queryResults(documentsIds);
-    }
-
-    private static boolean isSingleToken(String expression) {
-        return !StringUtils.hasNonAlphanumericCharacter(expression);
     }
 }

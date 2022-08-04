@@ -20,4 +20,9 @@ public class StringUtils {
         }
         return false;
     }
+
+    public static String trimSpaces(String expression) {
+        expression = expression.replace(" ", "");
+        return expression;
+    }
 }

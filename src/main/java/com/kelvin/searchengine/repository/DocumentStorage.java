@@ -25,13 +25,8 @@ public class DocumentStorage {
         this.documents.put(3, new Document(3, "soup fish potato salt pepper"));
     }
 
-    public List<Integer> getDocumentsIdsForSingleToken(String expression) {
-
-        return documents.entrySet()
-                .stream()
-                .filter(d -> d.getValue().getTokens().contains(expression))
-                .map(d -> d.getKey())
-                .collect(Collectors.toList());
+    public void store(Document document){
+        documents.put(document.getId(), document);
     }
 
     public List<Integer> getDocumentsIds(SearchEntity searchEntity) {
@@ -41,17 +36,17 @@ public class DocumentStorage {
         for (int i = 0; i < searchEntity.getTokens().size(); i++){
 
             if (i == 0){
-                int finalI = i;
-                predicate = d -> d.getValue().getTokens().contains(searchEntity.getTokens().get(finalI));
+                int index = i;
+                predicate = d -> d.getValue().getTokens().contains(searchEntity.getTokens().get(index));
             }
             else {
                 if (searchEntity.getSymbols().get(i - 1).equals('&')){
-                    int finalI1 = i;
-                    predicate = predicate.and(d -> d.getValue().getTokens().contains(searchEntity.getTokens().get(finalI1)));
+                    int index = i;
+                    predicate = predicate.and(d -> d.getValue().getTokens().contains(searchEntity.getTokens().get(index)));
                 }
                 else if (searchEntity.getSymbols().get(i - 1).equals('|')){
-                    int finalI2 = i;
-                    predicate = predicate.or(d -> d.getValue().getTokens().contains(searchEntity.getTokens().get(finalI2)));
+                    int index = i;
+                    predicate = predicate.or(d -> d.getValue().getTokens().contains(searchEntity.getTokens().get(index)));
                 }
             }
         }
@@ -61,9 +56,5 @@ public class DocumentStorage {
                 .filter(predicate)
                 .map(d -> d.getKey())
                 .collect(Collectors.toList());
-    }
-
-    public void store(Document document){
-        documents.put(document.getId(), document);
     }
 }

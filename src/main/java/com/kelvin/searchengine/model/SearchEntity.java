@@ -30,23 +30,27 @@ public class SearchEntity {
             if (character.equals('|') || character.equals('&')) {
                 symbols.add(character);
                 if (i > 0 && chars[i - 1] != ')') {
-                    String token = expression.substring(latestAlphaNumericCharacterIndex, i);
+                    String token = extractToken(expression, latestAlphaNumericCharacterIndex, i);
                     tokens.add(token);
                 }
                 latestAlphaNumericCharacterIndex = i + 1;
                 continue;
             }
             if (character.equals(')')) {
-                String token = expression.substring(latestAlphaNumericCharacterIndex, i);
+                String token = extractToken(expression, latestAlphaNumericCharacterIndex, i);
                 tokens.add(token);
                 latestAlphaNumericCharacterIndex = i + 1;
                 continue;
             }
 
             if (i == chars.length - 1) {
-                String token = expression.substring(latestAlphaNumericCharacterIndex, i + 1);
+                String token = extractToken(expression, latestAlphaNumericCharacterIndex, i + 1);
                 tokens.add(token);
             }
         }
+    }
+
+    private static String extractToken(String expression, int tokenStartingIndex, int tokenEndingIndex) {
+        return expression.substring(tokenStartingIndex, tokenEndingIndex);
     }
 }
