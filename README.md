@@ -16,11 +16,21 @@ java -jar target/search-engine-0.0.1-SNAPSHOT.jar
 
 **index:**
 
+*Example 1*
+
 **Input:** <br>
 index 4 fish eggs bacon soup potato
 
 **Output:**<br>
 index ok 4
+
+*Example 2*
+
+**Input:** <br>
+index K fish eggs bacon soup potato
+
+**Output:**<br>
+index error Doc id should be an integer!
 
 </p>
 
@@ -28,10 +38,20 @@ index ok 4
 
 **query:**
 
+*Example 3*
+
 **Input:** <br> 
 query (soup & fish) | eggs
 
 **Output:**<br>
 query results 2 3
+
+*Example 4*
+
+**Input:** <br>
+query (soup & fish) & airplane
+
+**Output:**<br>
+query error No results found.
 
 </p>
