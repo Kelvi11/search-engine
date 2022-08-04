@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class SearchToken {
+public class SearchEntity {
 
     private List<String> tokens;
     private List<Character> symbols;
 
-    public SearchToken(String expression) {
+    public SearchEntity(String expression) {
 
         this.tokens = new ArrayList<>();
         this.symbols = new ArrayList<>();

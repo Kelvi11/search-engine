@@ -1,7 +1,7 @@
 package com.kelvin.searchengine.repository;
 
 import com.kelvin.searchengine.model.Document;
-import com.kelvin.searchengine.model.SearchToken;
+import com.kelvin.searchengine.model.SearchEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -34,24 +34,24 @@ public class DocumentStorage {
                 .collect(Collectors.toList());
     }
 
-    public List<Integer> getDocumentsIds(SearchToken searchToken) {
+    public List<Integer> getDocumentsIds(SearchEntity searchEntity) {
 
         Predicate<Map.Entry<Integer, Document>> predicate = null;
 
-        for (int i = 0; i < searchToken.getTokens().size(); i++){
+        for (int i = 0; i < searchEntity.getTokens().size(); i++){
 
             if (i == 0){
                 int finalI = i;
-                predicate = d -> d.getValue().getTokens().contains(searchToken.getTokens().get(finalI));
+                predicate = d -> d.getValue().getTokens().contains(searchEntity.getTokens().get(finalI));
             }
             else {
-                if (searchToken.getSymbols().get(i - 1).equals('&')){
+                if (searchEntity.getSymbols().get(i - 1).equals('&')){
                     int finalI1 = i;
-                    predicate = predicate.and(d -> d.getValue().getTokens().contains(searchToken.getTokens().get(finalI1)));
+                    predicate = predicate.and(d -> d.getValue().getTokens().contains(searchEntity.getTokens().get(finalI1)));
                 }
-                else if (searchToken.getSymbols().get(i - 1).equals('|')){
+                else if (searchEntity.getSymbols().get(i - 1).equals('|')){
                     int finalI2 = i;
-                    predicate = predicate.or(d -> d.getValue().getTokens().contains(searchToken.getTokens().get(finalI2)));
+                    predicate = predicate.or(d -> d.getValue().getTokens().contains(searchEntity.getTokens().get(finalI2)));
                 }
             }
         }

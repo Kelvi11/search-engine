@@ -1,7 +1,7 @@
 package com.kelvin.searchengine.api;
 
 import com.kelvin.searchengine.model.Document;
-import com.kelvin.searchengine.model.SearchToken;
+import com.kelvin.searchengine.model.SearchEntity;
 import com.kelvin.searchengine.repository.DocumentStorage;
 import com.kelvin.searchengine.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,9 +56,9 @@ public class Commands {
             documentsIds = new ArrayList<>(documentStorage.getDocumentsIdsForSingleToken(expression));
         }
         else {
-            SearchToken searchToken = new SearchToken(expression);
+            SearchEntity searchEntity = new SearchEntity(expression);
 
-            documentsIds = new ArrayList<>(documentStorage.getDocumentsIds(searchToken));
+            documentsIds = new ArrayList<>(documentStorage.getDocumentsIds(searchEntity));
         }
         if (documentsIds.isEmpty()){
             String message = "No results found.";
