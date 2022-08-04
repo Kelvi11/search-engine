@@ -19,10 +19,10 @@ public class ResponseEntity {
                 .map(Object::toString)
                 .collect(Collectors.joining(" "));
 
-        return "query results " + message;
+        return "\nquery results " + message;
     }
 
     public static String queryError(String message) {
-        return "query error " + message;
+        return "\nquery error " + message;
     }
 }
