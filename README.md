@@ -3,23 +3,35 @@
 This application is simple search engine console application for storing and retriving documents based on the tokens associated with a document.
 
 
-# Building the application
+### Building the application
 
 mvn package
 
-# Running the application
+### Running the application
 java -jar target/search-engine-0.0.1-SNAPSHOT.jar
 
-# Commands examples
+### Commands examples
 
-Input:
+<p>
+
+**index:**
+
+**Input:** <br>
 index 4 fish eggs bacon soup potato
 
-Output:
+**Output:**<br>
 index ok 4
 
-Input:
+</p>
+
+<p>
+
+**query:**
+
+**Input:** <br> 
 query (soup & fish) | eggs
 
-Output:
+**Output:**<br>
 query results 2 3
+
+</p>
